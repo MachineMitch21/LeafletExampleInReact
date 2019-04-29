@@ -11,9 +11,10 @@ const MapViewControl = (props) => {
 		e.preventDefault();
 	}
 
-	let views = props.views.forEach((element) => {
+	let views = props.views.map((element, index) => {
 		return (	
-			<ViewButton 
+      <ViewButton 
+        tooltipPlacement={index === 0 ? 'top' : 'right'}
 				viewData={element}
 				onViewButtonClicked={onViewButtonClicked}
 			/>	

@@ -27,16 +27,19 @@ class LeafletMap extends Component {
 			mapViews: [
 				{
 					iconClass: 'fas fa-satellite',
-					tilesUrl: mapTilerSatelliteTiles
+          tilesUrl: mapTilerSatelliteTiles,
+          tooltip: 'Satellite View'
 				},
 				{
 					iconClass: 'fas fa-globe',
-					tilesUrl: openStreetMapTiles
+          tilesUrl: openStreetMapTiles,
+          tooltip: 'Basic View'
 				}
 			],
 			currentView: {
 				iconClass: 'fas fa-globe',
-				tilesUrl: openStreetMapTiles
+        tilesUrl: openStreetMapTiles,
+        tooltip: 'Basic View'
 			}
 		};
   }

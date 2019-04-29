@@ -1,10 +1,35 @@
 .ViewControl {
 	color: #333;
-	line-height: 18px;
-	height: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: fit-content;
+  justify-content: center;
+  align-content: center;
+}
+
+.ViewControl button {
+  flex: 1 1 100%;
+  background-color: #FEEEE2;
+  -webkit-transition: all 1000ms ease-in-out;
+  -ms-transition: all 1000ms ease-in-out;
+  transition: all 1000ms ease-in-out;
+  border: none;
 }
 
 .ViewControl i {
 	width: 24px;
-	height: 24px;
+  height: 24px;
+  padding: .5em;
+  margin: .2em;
+  font-size: 24px;
+  text-align: center;
+  vertical-align: sub;
+}
+
+.ViewControl button:hover {
+  cursor: pointer;
+  background-color: #FEB24C;
+  border: 10% solid #333;
 }
