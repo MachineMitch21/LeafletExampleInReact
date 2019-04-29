@@ -12,16 +12,11 @@ const ViewButton = (props) => {
 	}
 
 	return (
-    <Tippy content={viewData.tooltip} placement={props.tooltipPlacement}>
-      <button>
-        <i 
-          id={id}
-          key={id}
-          className={viewData.iconClass}
-          onClick={onSelfClicked}
-        ></i>
-      </button>
-    </Tippy>
+		<Tippy content={viewData.tooltip} placement={props.tooltipPlacement}>
+			<button onClick={onSelfClicked}>
+				<i id={id} key={id} className={viewData.iconClass} />
+			</button>
+		</Tippy>
 	);
 }
 
