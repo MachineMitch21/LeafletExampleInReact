@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import FeatureDetail from './FeatureDetail/FeatureDetail';
 import InfoLegend from './InfoLegend/InfoLegend';
+import MapViewControl from './MapViewControl/MapViewControl';
 import './LeafletMap.css';
+
+import _ from 'lodash';
 
 import statesData from './StatesData';
 
+const mapTilerSatelliteTiles = 'https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=M7BoHsl88rAP36sk5bDL';
 const openStreetMapTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const openStreetMapAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const mapCenter = [36, -85];
@@ -15,12 +19,26 @@ class LeafletMap extends Component {
   constructor() {
     super();
     this.state = {
-      selectedFeature: {
-        name: undefined,
-        density: undefined
-      },
-      grades: [0, 10, 20, 50, 100, 200, 500, 1000]
-    }
+			selectedFeature: {
+				name: undefined,
+				density: undefined
+			},
+			grades: [0, 10, 20, 50, 100, 200, 500, 1000],
+			mapViews: [
+				{
+					iconClass: 'fas fa-satellite',
+					tilesUrl: mapTilerSatelliteTiles
+				},
+				{
+					iconClass: 'fas fa-globe',
+					tilesUrl: openStreetMapTiles
+				}
+			],
+			currentView: {
+				iconClass: 'fas fa-globe',
+				tilesUrl: openStreetMapTiles
+			}
+		};
   }
 
   getColor = (d) => {
@@ -81,35 +99,28 @@ class LeafletMap extends Component {
     });
   }
 
+  onMapViewChanged = (mv) => {
+    let cv = this.state.currentView;
+
+    if (!_.isEqual(cv, mv)) {
+      this.setState({
+        currentView: mv
+      });
+    }
+  }
+
   render() {
     return (
-      <>
-        <Map
-          ref="map"
-          center={mapCenter}
-          zoom={zoomLevel}
-          style={{width: '100%', height: '100%'}}
-        >
-          <TileLayer 
-            attribution={openStreetMapAttr}
-            url={openStreetMapTiles}
-          />
-          <GeoJSON 
-            ref="geojson"
-            data={statesData} 
-            style={this.style}
-            onEachFeature={this.onEachFeature}
-          />
-          <FeatureDetail 
-            detail={this.state.selectedFeature}
-          />
-          <InfoLegend 
-            getColor={this.getColor}
-            grades={this.state.grades}
-          />
-        </Map>
-      </>
-    );
+			<>
+				<Map ref="map" center={mapCenter} zoom={zoomLevel} style={{ width: '100%', height: '100%' }}>
+					<TileLayer attribution={openStreetMapAttr} url={this.state.currentView.tilesUrl} />
+					<GeoJSON ref="geojson" data={statesData} style={this.style} onEachFeature={this.onEachFeature} />
+					<FeatureDetail detail={this.state.selectedFeature} />
+					<InfoLegend getColor={this.getColor} grades={this.state.grades} />
+          <MapViewControl views={this.state.mapViews} onViewChanged={this.onMapViewChanged} />
+				</Map>
+			</>
+		);
   }
 }
 

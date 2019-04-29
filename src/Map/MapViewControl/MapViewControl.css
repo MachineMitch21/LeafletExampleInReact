@@ -1,0 +1,10 @@
+.ViewControl {
+	color: #333;
+	line-height: 18px;
+	height: fit-content;
+}
+
+.ViewControl i {
+	width: 24px;
+	height: 24px;
+}
